@@ -7,6 +7,8 @@ public class Calibrar : MonoBehaviour
 {
     private AudioSource pureTone;
     public Button calibrar;
+    public bool calibrando = false;
+
 
     private void Awake()
     {
@@ -19,13 +21,24 @@ public class Calibrar : MonoBehaviour
 
     public void Calibrado()
     {
-        pureTone.playOnAwake = true;
-        pureTone.Play();
-        Debug.Log("Emitiendo pitido...");
-    }
+        if (calibrando == true)
+        {
+            pureTone.Stop();
+            Debug.Log("Fin calibrado");
+            calibrando = false;
+        }
+        else
+        {
+            pureTone.playOnAwake = true;
+            pureTone.Play();
+            Debug.Log("Emitiendo pitido...");
+            calibrando = true;
+        }
 
-    public void FinCalibrado()
+        /*public void FinCalibrado()
     {
         pureTone.Stop();
+    }*/
     }
 }
+

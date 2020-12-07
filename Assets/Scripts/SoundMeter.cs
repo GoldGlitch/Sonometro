@@ -19,6 +19,13 @@ public class SoundMeter : MonoBehaviour
     private float delay = 1;
     private float time;
 
+    public Image barraSonido1;
+    public Image barraSonido2;
+
+    public bool microEncendido = false;
+
+    public Text textoComparativo;
+
     private void Awake()
     {
         audioInput = GetComponent<AudioSource>();
@@ -32,16 +39,45 @@ public class SoundMeter : MonoBehaviour
 
     public void ActivarMicrofono()
     {
-        valores.Clear();
-        audioInput.clip = Microphone.Start(Microphone.devices[0], true, 10, 44100);
-        while (!(Microphone.GetPosition(null) > 0)) { }
-        audioInput.Play();
-        audioInput.volume = 0.001f;
-        //audioInput.mute = true;
+        if (microEncendido == true)
+        {
+            Microphone.End(Microphone.devices[0]);
+            audioInput.Stop();
+            float suma = 0;
+            foreach (float valor in valores)
+            {
+                suma += valor;
+                Debug.Log(valor);
+            }
+            float promedio = suma / valores.Count;
+            average.text = "Average: " + promedio.ToString("#.#") + " dB";
+            microEncendido = false;
+            Debug.Log("Micro apagado");
+
+
+        }
+        else
+        {
+            valores.Clear();
+            audioInput.clip = Microphone.Start(Microphone.devices[0], true, 10, 44100);
+            while (!(Microphone.GetPosition(null) > 0)) { }
+            audioInput.Play();
+            audioInput.volume = 0.001f;
+            //audioInput.mute = true;
+            microEncendido = true;
+            Debug.Log("Micro encendido");
+
+        }
     }
 
-    private void Update()
+
+    public void Update()
     {
+        //Barras gráficas que representan el sonido
+        barraSonido1.fillAmount = dBValue / 120;
+        barraSonido2.fillAmount = dBValue / 120;
+
+
         //https://forum.unity.com/threads/why-no-timer-class.221139/
         if (time > 0)
         {
@@ -54,6 +90,16 @@ public class SoundMeter : MonoBehaviour
         {
             CalcularDecibelios(audioInput);
             time = delay;
+        }
+
+        //Comparativa con decibelios
+        if (dBValue >= 0 && dBValue <= 20)
+        {
+            textoComparativo.text = "Pájaros cantando.";
+        }
+        if (dBValue >= 21 && dBValue <= 40)
+        {
+            textoComparativo.text = "Susurro del viento en los árboles.";
         }
     }
 
@@ -73,7 +119,7 @@ public class SoundMeter : MonoBehaviour
         decibelios.text = dBValue.ToString("#.#") + " dB";
     }
 
-    public void DesactivarMicrofono()
+    /*public void DesactivarMicrofono()
     {
         Microphone.End(Microphone.devices[0]);
         audioInput.Stop();
@@ -85,7 +131,7 @@ public class SoundMeter : MonoBehaviour
         }
         float promedio = suma / valores.Count;
         average.text = "Average: " + promedio.ToString("#.#") + " dB";
-    }
+    }*/
 
     public void SubirNivelOffset()
     {
