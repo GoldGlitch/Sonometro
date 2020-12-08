@@ -9,10 +9,6 @@ public class Calibrar : MonoBehaviour
     public Button calibrar;
     public bool calibrando = false;
 
-    public Sprite calibrandoSprite;
-    public Sprite nocalibrandoSprite;
-
-    public Button calibrarBoton;
 
     private void Awake()
     {
@@ -21,15 +17,6 @@ public class Calibrar : MonoBehaviour
 
     private void Update()
     {
-
-        if (calibrando == true)
-        {
-            calibrarBoton.gameObject.GetComponent<Image>().sprite = calibrandoSprite;
-        }
-        else
-        {
-            calibrarBoton.gameObject.GetComponent<Image>().sprite = nocalibrandoSprite;
-        }
     }
 
     public void Calibrado()
