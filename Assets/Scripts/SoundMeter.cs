@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+
 
 public class SoundMeter : MonoBehaviour
 {
-    public Text decibelios, average;
+    public TMP_Text decibelios, average;
     public Button start, stop, subirOffset, bajarOffset;
     public int offset = 0;
 
@@ -22,9 +24,14 @@ public class SoundMeter : MonoBehaviour
     public Image barraSonido1;
     public Image barraSonido2;
 
+    public Sprite stopSprite;
+    public Sprite startSprite;
+
+    public Button encendidoapagado;
+
     public bool microEncendido = false;
 
-    public Text textoComparativo;
+    public TMP_Text textoComparativo;
 
     private void Awake()
     {
@@ -95,12 +102,47 @@ public class SoundMeter : MonoBehaviour
         //Comparativa con decibelios
         if (dBValue >= 0 && dBValue <= 20)
         {
-            textoComparativo.text = "Pájaros cantando.";
+            textoComparativo.text = "Pisada";
         }
         if (dBValue >= 21 && dBValue <= 40)
         {
-            textoComparativo.text = "Susurro del viento en los árboles.";
+            textoComparativo.text = "Viento";
         }
+        if (dBValue >= 41 && dBValue <= 50)
+        {
+            textoComparativo.text = "Biblioteca";
+        }
+        if (dBValue >= 51 && dBValue <= 60)
+        {
+            textoComparativo.text = "Conversación";
+        }
+        if (dBValue >= 61 && dBValue <= 80)
+        {
+            textoComparativo.text = "Tráfico";
+        }
+        if (dBValue >= 81 && dBValue <= 100)
+        {
+            textoComparativo.text = "Sonido de motor";
+        }
+        if (dBValue >= 101 && dBValue <= 120)
+        {
+            textoComparativo.text = "Concierto";
+        }
+        if (dBValue >= 121 && dBValue <= 140)
+        {
+            textoComparativo.text = "Martillo neumático";
+        }
+
+
+        if (microEncendido == true)
+        {
+            encendidoapagado.gameObject.GetComponent<Image>().sprite = stopSprite;
+        }
+        else
+        {
+            encendidoapagado.gameObject.GetComponent<Image>().sprite = startSprite;
+        }
+        
     }
 
     public void CalcularDecibelios(AudioSource audio)
@@ -116,7 +158,16 @@ public class SoundMeter : MonoBehaviour
         dBValue = 20 * Mathf.Log10(rmsValue / refValue) + offset;
         if (dBValue <= 0) dBValue = 0;
         if (dBValue > 0) valores.Add(dBValue);
-        decibelios.text = dBValue.ToString("#.#") + " dB";
+        if (microEncendido == true)
+        {
+            decibelios.text = dBValue.ToString("#.#") + " dB";
+        }
+        else
+        {
+            decibelios.text = dBValue.ToString("#.#") + "0 dB";
+        }
+
+        
     }
 
     /*public void DesactivarMicrofono()
