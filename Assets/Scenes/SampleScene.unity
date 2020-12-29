@@ -483,8 +483,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   calibrar: {fileID: 771572967}
   calibrando: 0
-  calibrandoSprite: {fileID: 21300000, guid: 9097fd6355fe8ee4a9663a676b07b29c, type: 3}
-  nocalibrandoSprite: {fileID: 21300000, guid: 0a289c776118d354fb4ee1a5a9d184f3, type: 3}
+  calibrandoSprite: {fileID: 21300000, guid: 0a289c776118d354fb4ee1a5a9d184f3, type: 3}
+  nocalibrandoSprite: {fileID: 21300000, guid: 9097fd6355fe8ee4a9663a676b07b29c, type: 3}
   calibrarBoton: {fileID: 771572967}
 --- !u!4 &420102633
 Transform:
@@ -1007,7 +1007,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0a289c776118d354fb4ee1a5a9d184f3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9097fd6355fe8ee4a9663a676b07b29c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
