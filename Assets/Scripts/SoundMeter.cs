@@ -9,7 +9,7 @@ public class SoundMeter : MonoBehaviour
 {
     public TMP_Text decibelios, average;
     public Button start, stop, subirOffset, bajarOffset;
-    public int offset = 0;
+    public int offset = 30;
 
     private float dBValue;
     private float rmsValue;
